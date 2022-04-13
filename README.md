@@ -22,4 +22,4 @@
 
 ## Ссылка на gh-pages:
 
-https://afonina-ola.github.io/russian-travel/
+https://afonina-ola.github.io/mesto-project/
