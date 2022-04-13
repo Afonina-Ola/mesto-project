@@ -1,0 +1,11 @@
+.header {
+    display: block;
+    border-bottom: 1px solid #545454;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 1070px) {
+    .header {
+        padding: 0;
+    }
+}

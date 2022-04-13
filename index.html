@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Место</title>
+    <link rel="stylesheet" href="pages/index.css" />
+</head>
+
+<body class="root">
+    <header class="header">
+        <img src="./images/header-logo.svg" class="header__logo" alt='logo'/>
+    </header>
+<main>
+    <section class="profile">
+        <div class="profile__profile-info">        
+          <img src="./images/profile-kusto.jpg" class="profile__avatar" alt='#'/>        
+        <div class="profile__profile-info-text"> 
+            <div class="profile__profile-info-name">
+              <h1 class="profile__author">Жак-Ив Кусто</h1>
+              <button class="profile__stilus">
+                  <img src="./images/profile-stilus.svg" class="profile__stilus-vector" alt='stilus'/>                  
+              </button>
+        </div>
+          <p class="profile__about-the-author">Исследователь океана</p>    
+        </div>
+        </div>
+        <button class="profile__add-button">
+          <img src="./images/profile-plus.svg" class="profile__add-button-plus" alt='button-plus'/>       
+        </button>
+    </section>   
+    <section class="cards">        
+        <div class="card">
+            <img src="./images/card-karachaevsk.jpg" class="card__mask-group" alt='#'/>
+            <div class="card__rectangle">
+                <div class="card__text-button">
+                <h2 class="card__text">Карачаевск</h2>
+                <button class="card__like-button card__like-button_active"></button>
+                </div>
+            </div>           
+        </div>
+        <div class="card">
+            <img src="./images/card-elbrus.jpg" class="card__mask-group" alt='#'/>
+            <div class="card__rectangle">
+                <div class="card__text-button">
+                <h2 class="card__text">Гора Эльбрус</h2>
+                <button class="card__like-button"></button>
+                </div>
+            </div>           
+        </div>
+        <div class="card">
+            <img src="./images/card-dombai.jpg" class="card__mask-group" alt='#'/>
+            <div class="card__rectangle">
+                <div class="card__text-button">
+                <h2 class="card__text">Домбай</h2>
+                <button class="card__like-button"></button>
+                </div> 
+            </div>           
+        </div>
+        <div class="card">
+            <img src="./images/card-elbrus.jpg" class="card__mask-group" alt='#'/>
+            <div class="card__rectangle">
+                <div class="card__text-button">
+                <h2 class="card__text">Гора Эльбрус</h2>
+                <button class="card__like-button"></button>
+                </div>
+            </div>           
+        </div>
+        <div class="card">
+            <img src="./images/card-dombai.jpg" class="card__mask-group" alt='#'/>
+            <div class="card__rectangle">
+                <div class="card__text-button">
+                <h2 class="card__text">Домбай</h2>
+                <button class="card__like-button"></button>
+                </div>
+            </div>           
+        </div>
+        <div class="card">
+            <img src="./images/card-karachaevsk.jpg" class="card__mask-group" alt='#'/>
+            <div class="card__rectangle">
+                <div class="card__text-button">
+                <h2 class="card__text">Карачаево-Черкессия</h2>
+                <button class="card__like-button"></button>
+                </div>
+            </div>           
+        </div>                
+    </section>    
+    </main>
+    <footer class="footer">
+        <p class="footer__copyright">&copy;2022 Mesto Russia</p>
+    </footer>
+    <div class="popup">
+        <div class="popup_container">
+            <form class="popup__form">                
+                    <h1 class="popup__heading-form">Редактировать профиль</h1>
+                    <fieldset class="popup__form-input-container">  
+                        <input type="text" class="popup__item popup__item_user-name" name="user-name" value="Жак-Ив Кусто">  
+                        <input type="text" class="popup__item popup__item_about-the-user" name="about-the-user" value="Исследователь океана">
+                    </fieldset>
+                        <button class="popup__submit-button">Сохранить</button>                    
+            </form>
+            <button class="popup__button-close">
+                <img src="./images/popup-close-icon.svg" class="popup__close-icon" alt='close-icon'/>
+            </button>
+        </div>        
+    </div>
+</body>
+</html>
