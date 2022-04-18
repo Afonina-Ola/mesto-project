@@ -4,18 +4,20 @@
     grid-template-rows: repeat(auto-fit, 1fr);
     column-gap: 17px;
     row-gap: 20px;
+    width: min-content;
+    margin: 0 auto;
 }
 
 @media screen and (max-width: 1279px) {
     .cards {
         grid-template-columns: repeat(2, 1fr);
+        padding-left: 19px;
+        padding-right: 19px;
     }
 }
 
-@media screen and (max-width: 1070px) {
-    .cards {
-        padding-left: 19px;
-        padding-right: 19px;
+@media screen and (max-width: 665px) { 
+    .cards {        
         grid-template-columns: repeat(1, 1fr);
     }
 }

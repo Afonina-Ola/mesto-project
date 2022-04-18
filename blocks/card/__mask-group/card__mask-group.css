@@ -1,5 +1,7 @@
-.card__mask-group {
-    min-width: 282px;
-    min-height: 282px;
-    border-radius: 10px 10px 0 0;    
+.card__mask-group {   
+    border-radius: 10px 10px 0 0;
+    object-fit: cover;
+    object-position: 50% 50%;
+    width: 282px;
+    height: 282px;
 }

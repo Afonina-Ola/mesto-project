@@ -8,6 +8,7 @@
     background-color: transparent;
     cursor: pointer;
     transition: opacity 0.4s;
+    margin-bottom: 31px;    
 }
 
 .card__like-button:hover {

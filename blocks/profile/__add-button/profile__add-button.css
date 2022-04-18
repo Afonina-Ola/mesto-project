@@ -5,10 +5,15 @@
     margin-bottom: 83px;
     margin-top: 73px;
     display: flex;
-    background-color: #000000;
+    background-color: rgba(0, 0, 0, 0);
     padding: 0;
     cursor: pointer;
     transition: opacity 0.4s;
+    background-image: url("../../../images/profile-plus.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22px;
+    border-radius: 2px;
 }
 
 .profile__add-button:hover {   
@@ -16,12 +21,13 @@
 }
 
 
-@media screen and (max-width: 1070px) {
+@media screen and (max-width: 1279px) {
     .profile__add-button {
         margin-top: 0;
         margin-bottom: 36px;
         width: 282px;
         margin-left: 19px;
         margin-right: 19px;
+        background-size: 16px;
     }
 }

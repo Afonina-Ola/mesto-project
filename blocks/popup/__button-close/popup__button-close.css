@@ -6,7 +6,16 @@
     border: none;
     width: 32px;
     height: 32px;
-    padding: 0;    
+    padding: 0;
+    background-image: url("../../../images/popup-close-icon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px;
+    transition: opacity 0.4s;        
+}
+
+.popup__button-close:hover {
+    opacity: 60%;    
 }
 
 @media screen and (max-width: 1279px) {
@@ -15,5 +24,8 @@
         height: 20px;
         right: 0;
         top: -36px;
+        background-size: 20px;
     }
 }
+
+
