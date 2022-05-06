@@ -4,8 +4,7 @@
     background-color: #FFFFFF;
     border-radius: 10px;
     display: block;
-    box-sizing: border-box;
-    border-radius: 10px; 
+    box-sizing: border-box;    
 }
 
 @media screen and (max-width: 1279px) {

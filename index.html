@@ -11,82 +11,74 @@
 
 <body class="root">
     <header class="header">
-        <img src="./images/header-logo.svg" class="header__logo" alt='логотип'/>
+        <img src="./images/header-logo.svg" class="header__logo" alt='логотип' />
     </header>
-<main>
-    <section class="profile">
-        <div class="profile__profile-info">        
-          <img src="./images/profile-kusto.jpg" class="profile__avatar" alt='фото Жак-Ив Кусто'/>        
-        <div class="profile__profile-info-text"> 
-            <div class="profile__profile-info-name">
-              <h1 class="profile__author">Жак-Ив Кусто</h1>
-              <button aria-label="указать имя и о себе" type="button" class="profile__stilus"></button>
-        </div>
-          <p class="profile__about-the-author">Исследователь океана</p>    
-        </div>
-        </div>
-        <button aria-label="добавить новую карточку" type="button" class="profile__add-button"></button>
-    </section>   
-    <section class="cards">        
-        <article class="card">
-            <img src="./images/card-adir-su.jpg" class="card__mask-group" alt='фото ущелья Адыр-Су'/>            
-                <div class="card__text-button">
-                <h2 class="card__text">Адыр-Су</h2>
-                <button aria-label="поставить лайк" type="button" class="card__like-button card__like-button_active"></button>                
-            </div>           
-        </article>
-        <article class="card">
-            <img src="./images/card-lednik-shaurtu.jpg" class="card__mask-group" alt='фото ледника Шаурту'/>            
-                <div class="card__text-button">
-                <h2 class="card__text">Ледник Шаурту</h2>
-                <button aria-label="поставить лайк" type="button" class="card__like-button"></button> 
-                </div>                      
-        </article>
-        <article class="card">
-            <img src="./images/card-alibek.jpg" class="card__mask-group" alt='фото Алибекского водопада'/>            
-                <div class="card__text-button">
-                <h2 class="card__text">Алибек</h2>
-                <button aria-label="поставить лайк" type="button" class="card__like-button"></button> 
-                </div>                      
-        </article>
-        <article class="card">
-            <img src="./images/card-hram.jpg" class="card__mask-group" alt='фото Шоанинского храма'/>           
-                <div class="card__text-button">
-                <h2 class="card__text">Шоанинский храм</h2>
-                <button aria-label="поставить лайк" type="button" class="card__like-button card__like-button_active"></button> 
-                </div>                   
-        </article>
-        <article class="card">
-            <img src="./images/card-ordjonikidze.jpg" class="card__mask-group" alt='фото окрестностей поселка Орджоникидзе'/>            
-                <div class="card__text-button">
-                <h2 class="card__text">Орджоникидзе</h2>
-                <button aria-label="поставить лайк" type="button" class="card__like-button card__like-button_active"></button>
-                </div>                     
-        </article>
-        <article class="card">
-            <img src="./images/card-chegem.jpg" class="card__mask-group" alt='фото полета парапланериста в Чегеме'/>           
-                <div class="card__text-button">
-                <h2 class="card__text">Чегем</h2>
-                <button aria-label="поставить лайк" type="button" class="card__like-button"></button>
-                </div>                     
-        </article>                
-    </section>    
+    <main>
+        <section class="profile">
+            <div class="profile__profile-info">
+                <img src="./images/profile-kusto.jpg" class="profile__avatar" alt='фото Жак-Ив Кусто' />
+                <div class="profile__profile-info-text">
+                    <div class="profile__profile-info-name">
+                        <h1 class="profile__author">Жак-Ив Кусто</h1>
+                        <button aria-label="указать имя и о себе" type="button" class="profile__stilus"></button>
+                    </div>
+                    <p class="profile__about-the-author">Исследователь океана</p>
+                </div>
+            </div>
+            <button aria-label="добавить новую карточку" type="button" class="profile__add-button"></button>
+        </section>
+        <section class="cards">
+            <template id="cardMesto">
+                <article class="card">
+                    <button aria-label="удалить карточку" type="button" class="card__trash-button"></button>                    
+                    <img src="" class="card__mask-group" alt='фото места' />
+                    <div class="card__text-button">
+                        <h2 class="card__text">Название места</h2>
+                        <button aria-label="поставить лайк" type="button" class="card__like-button"></button>
+                    </div>
+                </article>
+            </template>           
+        </section>
     </main>
     <footer class="footer">
         <p class="footer__copyright">&copy;2022 Mesto Russia</p>
     </footer>
-    <div class="popup"> 
-        <div class="popup__container"> 
-            <form name="form" class="popup__form">                
-                    <h3 class="popup__heading-form">Редактировать профиль</h3>
-                    <fieldset class="popup__form-input-container">  
-                        <input type="text" class="popup__item" name="user-name" value="Жак-Ив Кусто">  
-                        <input type="text" class="popup__item" name="about-the-user" value="Исследователь океана">
-                    </fieldset>
-                        <button type="submit" class="popup__submit-button">Сохранить</button>                    
+    <div class="popup" id="userInfo">
+        <div class="popup__container">
+            <form name="form" class="popup__form" id="userForm">
+                <h3 class="popup__heading-form">Редактировать профиль</h3>
+                <fieldset class="popup__form-input-container">
+                    <input type="text" class="popup__item" id="username" name="user-name">
+                    <input type="text" class="popup__item" id="userjob" name="about-the-user">
+                </fieldset>
+                <button type="submit" class="popup__submit-button">Сохранить</button>
             </form>
-            <button aria-label="закрыть" type="button" class="popup__button-close"></button>
-        </div>        
+            <button aria-label="закрыть" type="button" class="popup__button-close" id="userInfoClose"></button>
+        </div>
     </div>
+    <div class="popup" id="cardInfo">
+        <div class="popup__container">
+            <form name="form" class="popup__form" id="cardInfoSubmit">
+                <h3 class="popup__heading-form">Новое место</h3>
+                <fieldset class="popup__form-input-container">
+                    <input type="text" class="popup__item" id="mesto" name="mesto-name" placeholder="Название">
+                    <input type="text" class="popup__item" id="mestoHref" name="href-addres" placeholder="Ссылка на картинку">
+                </fieldset>
+                <button type="submit" class="popup__submit-button">Сохранить</button>
+            </form>
+            <button aria-label="закрыть" type="button" class="popup__button-close" id="cardInfoClose"></button>
+        </div>
+    </div>
+    <div class="popup" id="cardOpened">
+        <div class="popup__container-card-opened">
+            <figure class="popup__image-text-card">
+              <img src='https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg' class="popup__image" alt='фото выбранного места в увеличении'/>
+            <figcaption class="popup__image-text">Название места</figcaption>
+            </figure>
+        <button aria-label="закрыть" type="button" class="popup__button-close" id="cardClose"></button>
+    </div>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
+
