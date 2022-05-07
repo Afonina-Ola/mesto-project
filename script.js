@@ -103,11 +103,7 @@ function createCard(link, name) {
         evt.target.closest('.card').remove();
     });
     initialCardsElement.querySelector('.card__mask-group').addEventListener('click', function (evt) {
-        openPopup(imageCardPopupOpened);
-        function openPopupDark() {
-            imageCardPopupOpened.classList.add('popup_dark');            
-        }
-        openPopupDark(imageCardPopupOpened);
+        openPopup(imageCardPopupOpened);        
         imageOpened.src = link;
         imageTextOpened.textContent = name;
         imageOpened.alt = name;
