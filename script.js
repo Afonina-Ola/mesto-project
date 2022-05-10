@@ -107,12 +107,11 @@ function createCard(link, name) {
         imageOpened.src = link;
         imageTextOpened.textContent = name;
         imageOpened.alt = name;
-    });
-    clearInputs(cardAddForm);
+    });   
     return initialCardsElement;
 }
 
-function renderCard(link, name, position) {
+function renderCard(link, name, position = "end") {
     const card = createCard(link, name);
     if (position === 'start') {
         cardOnline.prepend(card);
@@ -129,7 +128,9 @@ function submitMesto(evt) {
     evt.preventDefault();
     renderCard(cardInputHref.value, cardInputMesto.value, 'start');
     closePopup(cardAddPopup);
+    clearInputs(cardAddForm);
 }
+
 cardAddForm.addEventListener('submit', submitMesto);
 
 imageClosePopupButton.addEventListener('click', function () {
