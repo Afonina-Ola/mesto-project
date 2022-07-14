@@ -44,12 +44,12 @@
     </footer>
     <div class="popup" id="userInfo">
         <div class="popup__container">
-            <form name="form" class="popup__form" id="userForm" novalidate>
+            <form name="form-user" class="popup__form" id="userForm" novalidate>
                 <h3 class="popup__heading-form">Редактировать профиль</h3>
                 <fieldset class="popup__form-input-container">
-                    <input type="text" class="popup__item" id="username" name="user-name" required minlength="2" maxlength="40">
+                    <input type="text" class="popup__item" id="username" name="user-name" placeholder="Имя" required minlength="2" maxlength="40">
                     <span class="username-input-error popup__item-error"></span>
-                    <input type="text" class="popup__item" id="userjob" name="about-the-user" required minlength="2" maxlength="200">
+                    <input type="text" class="popup__item" id="userjob" name="about-the-user" placeholder="О себе" required minlength="2" maxlength="200">
                     <span class="userjob-input-error popup__item-error"></span>
                 </fieldset>
                 <button type="submit" class="popup__submit-button">Сохранить</button>
@@ -59,7 +59,7 @@
     </div>
     <div class="popup" id="cardInfo">
         <div class="popup__container">
-            <form name="form" class="popup__form" id="cardInfoSubmit" novalidate>
+            <form name="form-mesto-add" class="popup__form" id="cardInfoSubmit" novalidate>
                 <h3 class="popup__heading-form">Новое место</h3>
                 <fieldset class="popup__form-input-container">
                     <input type="text" class="popup__item" id="mesto" name="mesto-name" placeholder="Название" required minlength="2" maxlength="30">
@@ -67,7 +67,7 @@
                     <input type="url" class="popup__item" id="mestoHref" name="href-addres" placeholder="Ссылка на картинку" required>
                     <span class="mestoHref-input-error popup__item-error"></span>
                 </fieldset>
-                <button type="submit" class="popup__submit-button">Сохранить</button>
+                <button type="submit" class="popup__submit-button" id="cardSubmitButton">Сохранить</button>
             </form>
             <button aria-label="закрыть" type="button" class="popup__button-close" id="cardInfoClose"></button>
         </div>

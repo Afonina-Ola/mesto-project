@@ -41,11 +41,6 @@ const isValid = (formElement, inputElement, validationMessage, validationSelecto
   }
 };
  
-formElement.addEventListener('submit', function (evt) {
-  // Отменим стандартное поведение по сабмиту
-  evt.preventDefault();
-});
-
 // функция принимает массив полей формы и возвращает true, если в нём хотя бы одно поле не валидно, 
 // и false, если все валидны.
 const hasInvalidInput = (inputList) => {
