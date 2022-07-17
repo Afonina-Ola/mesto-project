@@ -7,7 +7,7 @@ import '../components/api.js';
 
 import { openPopup, closePopup } from './modal.js'
 import { clearInputs } from './utils.js'
-import { fetchCards, removeCards } from './card.js'
+import { fetchCards, renderCard, confirmDeletionCard, targetCardToDelete } from './card.js'
 import { enableValidation, validationSelectors } from './validate.js'
 import { getUser, editUser, addCard, editAvatar } from './api.js'
 
@@ -42,9 +42,13 @@ const avatarSubmitButton = document.querySelector('#avatarSubmitButton');
 const cardDeletePopup = document.querySelector('#deleteCard');
 const cardDeleteFormClose = document.querySelector('#cardDeleteFormClose');
 
+// id пользователя, приходит с сервера
+let userId;
+
 function openUserEditPopup() {
     userNameInput.value = profileName.textContent;
     userJobInput.value = profileJob.textContent;
+    userSubmitButton.textContent = 'Сохранить';
     openPopup(userEditPopup);
 }
 
@@ -54,6 +58,7 @@ userCloseButton.addEventListener('click', function () {
 })
 
 avatarUser.addEventListener('click', function () {
+    avatarSubmitButton.textContent = 'Сохранить';
     openPopup(avatarUserPopup);
 });
 avatarCloseButton.addEventListener('click', function () {
@@ -68,7 +73,7 @@ cardDeleteFormClose.addEventListener('click', function () {
 // редактирование(обновление) профиля
 function submitProfileForm(evt) {
     evt.preventDefault();
-    userSubmitButton.textContent = 'Сохранение...';    
+    userSubmitButton.textContent = 'Сохранение...';
     editUser(userNameInput.value, userJobInput.value)
         .then(() => {
             //если данные удачно отправлены на сервер, то повторить загрузку с сервера            
@@ -82,7 +87,7 @@ function submitProfileForm(evt) {
             console.log(err); // выводим ошибку в консоль
         })
         .finally(() => {
-            userSubmitButton.textContent = 'Сохранить';
+            userSubmitButton.textContent = 'Сохранено';
         })
 }
 // обновление аватара
@@ -102,7 +107,7 @@ function submitAvatarForm(evt) {
             console.log(err); // выводим ошибку в консоль
         })
         .finally(() => {
-            avatarSubmitButton.textContent = 'Сохранить';
+            avatarSubmitButton.textContent = 'Сохранено';
         })
 }
 
@@ -123,40 +128,42 @@ function submitMesto(evt) {
     evt.preventDefault();
     cardSubmitButton.textContent = 'Сохранение...';
     addCard(cardInputMesto.value, cardInputHref.value)
-        .then(() => {
+        .then((data) => {
             closePopup(cardAddPopup);
             clearInputs(cardAddForm);
             cardSubmitButton.classList.add(validationSelectors.inactiveSubmitButtonClass);
             cardSubmitButton.setAttribute('disabled', true);
-            removeCards();
-            fetchCards();
+
+            renderCard(data.link, data.name, data.likes, data.owner._id, data._id, userId, "start")
         })
         .catch((err) => {
             console.log(err); // выводим ошибку в консоль
         })
         .finally(() => {
-            cardSubmitButton.textContent = 'Сохранить';
+            cardSubmitButton.textContent = 'Сохранено';
         })
 }
 
 cardAddForm.addEventListener('submit', submitMesto);
+
+cardDeletePopup.addEventListener('submit', () => {
+    confirmDeletionCard(targetCardToDelete);
+})
 
 //получение данных о пользователе
 getUser().then((user) => {
     profileName.textContent = user.name;
     profileJob.textContent = user.about;
     profileAvatar.src = user.avatar;
+    userId = user._id;
+    // карточки загружаются после загрузки данных о пользователе
+    fetchCards(userId);
 })
     .catch((err) => {
         console.log(err);
     });
 
-//получение карточек с сервера
-fetchCards();
-
 enableValidation(validationSelectors);
-
-
 
 export {
     profileName, profileEditButton, profileJob, profileAddButton, userEditPopup, userFormElement, userNameInput, userJobInput, cardDeletePopup,
