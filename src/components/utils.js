@@ -1,5 +1,5 @@
 function clearInputs(form) {
-    form.reset();
+  form.reset();
 }
 
-export { clearInputs } 
+export { clearInputs }

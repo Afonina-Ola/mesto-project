@@ -22,19 +22,15 @@ const userEditPopup = document.querySelector('#userInfo');
 const userFormElement = document.querySelector('#userForm');
 const userNameInput = document.querySelector('#username');
 const userJobInput = document.querySelector('#userjob');
-const userCloseButton = document.querySelector('#userInfoClose');
 const userSubmitButton = document.querySelector('#userSubmitButton');
 // окно добавления карточки
 const cardAddPopup = document.querySelector('#cardInfo');
 const cardAddForm = document.querySelector('#cardInfoSubmit');
 const cardInputMesto = document.querySelector('#mesto');
-const cardInputHref = document.querySelector('#mestoHref');
-const cardCloseButton = document.querySelector('#cardInfoClose');
-const cardSubmitButton = document.querySelector('#cardSubmitButton');
+const cardInputHref = document.querySelector('#mestoHref'); const cardSubmitButton = document.querySelector('#cardSubmitButton');
 // окно обновления аватара
 const avatarUser = document.querySelector('.profile__container-avatar ');
 const avatarUserPopup = document.querySelector('#editAvatar');
-const avatarCloseButton = document.querySelector('#avatarClose');
 const avatarEditForm = document.querySelector('#formAvatarEdit');
 const avatarHrefInput = document.querySelector('#avatarHref');
 const avatarSubmitButton = document.querySelector('#avatarSubmitButton');
@@ -45,70 +41,67 @@ const cardDeleteFormClose = document.querySelector('#cardDeleteFormClose');
 // id пользователя, приходит с сервера
 let userId;
 
+// кнопки закрытия (крестики)
+const closeButtons = document.querySelectorAll('.popup__button-close');
+
+closeButtons.forEach((button) => {
+  // находим 1 раз ближайший к крестику попап
+  const popup = button.closest('.popup');
+  // устанавливаем обработчик закрытия на крестик
+  button.addEventListener('click', () => closePopup(popup));
+});
+
 function openUserEditPopup() {
-    userNameInput.value = profileName.textContent;
-    userJobInput.value = profileJob.textContent;
-    userSubmitButton.textContent = 'Сохранить';
-    openPopup(userEditPopup);
+  userNameInput.value = profileName.textContent;
+  userJobInput.value = profileJob.textContent;
+  userSubmitButton.textContent = 'Сохранить';
+  openPopup(userEditPopup);
 }
 
 profileEditButton.addEventListener('click', openUserEditPopup);
-userCloseButton.addEventListener('click', function () {
-    closePopup(userEditPopup);
-})
 
 avatarUser.addEventListener('click', function () {
-    avatarSubmitButton.textContent = 'Сохранить';
-    openPopup(avatarUserPopup);
-});
-avatarCloseButton.addEventListener('click', function () {
-    closePopup(avatarUserPopup);
-    clearInputs(avatarEditForm);
+  avatarSubmitButton.textContent = 'Сохранить';
+  clearInputs(avatarEditForm);
+  openPopup(avatarUserPopup);
 });
 
 cardDeleteFormClose.addEventListener('click', function () {
-    closePopup(cardDeletePopup);
+  closePopup(cardDeletePopup);
 });
 
 // редактирование(обновление) профиля
 function submitProfileForm(evt) {
-    evt.preventDefault();
-    userSubmitButton.textContent = 'Сохранение...';
-    editUser(userNameInput.value, userJobInput.value)
-        .then(() => {
-            //если данные удачно отправлены на сервер, то повторить загрузку с сервера            
-            getUser().then((user) => {
-                profileName.textContent = user.name;
-                profileJob.textContent = user.about;
-            })
-            closePopup(userEditPopup);
-        })
-        .catch((err) => {
-            console.log(err); // выводим ошибку в консоль
-        })
-        .finally(() => {
-            userSubmitButton.textContent = 'Сохранено';
-        })
+  evt.preventDefault();
+  userSubmitButton.textContent = 'Сохранение...';
+  editUser(userNameInput.value, userJobInput.value)
+    .then((data) => {
+      profileName.textContent = data.name;
+      profileJob.textContent = data.about;
+      closePopup(userEditPopup);
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      userSubmitButton.textContent = 'Сохранить';
+    })
 }
 // обновление аватара
 function submitAvatarForm(evt) {
-    evt.preventDefault();
-    avatarSubmitButton.textContent = 'Сохранение...';
-    editAvatar(avatarHrefInput.value)
-        .then(() => {
-            //если данные удачно отправлены на сервер, то повторить загрузку с сервера            
-            getUser().then((user) => {
-                profileAvatar.src = user.avatar;
-            })
-            closePopup(avatarUserPopup);
-            clearInputs(avatarEditForm);
-        })
-        .catch((err) => {
-            console.log(err); // выводим ошибку в консоль
-        })
-        .finally(() => {
-            avatarSubmitButton.textContent = 'Сохранено';
-        })
+  evt.preventDefault();
+  avatarSubmitButton.textContent = 'Сохранение...';
+  editAvatar(avatarHrefInput.value)
+    .then((data) => {
+      profileAvatar.src = data.avatar;
+      closePopup(avatarUserPopup);
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      avatarSubmitButton.textContent = 'Сохранить';
+    })
 }
 
 avatarEditForm.addEventListener('submit', submitAvatarForm);
@@ -116,59 +109,52 @@ avatarEditForm.addEventListener('submit', submitAvatarForm);
 userFormElement.addEventListener('submit', submitProfileForm);
 
 profileAddButton.addEventListener('click', function () {
-    openPopup(cardAddPopup);
+  clearInputs(cardAddForm);
+  openPopup(cardAddPopup);
 });
 
-cardCloseButton.addEventListener('click', function () {
-    closePopup(cardAddPopup);
-})
-
-//добавление новой карточки 
+//добавление новой карточки
 function submitMesto(evt) {
-    evt.preventDefault();
-    cardSubmitButton.textContent = 'Сохранение...';
-    addCard(cardInputMesto.value, cardInputHref.value)
-        .then((data) => {
-            closePopup(cardAddPopup);
-            clearInputs(cardAddForm);
-            cardSubmitButton.classList.add(validationSelectors.inactiveSubmitButtonClass);
-            cardSubmitButton.setAttribute('disabled', true);
+  evt.preventDefault();
+  cardSubmitButton.textContent = 'Сохранение...';
+  addCard(cardInputMesto.value, cardInputHref.value)
+    .then((data) => {
+      closePopup(cardAddPopup);
+      cardSubmitButton.classList.add(validationSelectors.inactiveSubmitButtonClass);
+      cardSubmitButton.setAttribute('disabled', true);
 
-            renderCard(data.link, data.name, data.likes, data.owner._id, data._id, userId, "start")
-        })
-        .catch((err) => {
-            console.log(err); // выводим ошибку в консоль
-        })
-        .finally(() => {
-            cardSubmitButton.textContent = 'Сохранено';
-        })
+      renderCard(data.link, data.name, data.likes, data.owner._id, data._id, userId, "start")
+    })
+    .catch((err) => {
+      console.log(err); // выводим ошибку в консоль
+    })
+    .finally(() => {
+      cardSubmitButton.textContent = 'Сохранить';
+    })
 }
 
 cardAddForm.addEventListener('submit', submitMesto);
 
 cardDeletePopup.addEventListener('submit', () => {
-    confirmDeletionCard(targetCardToDelete);
+  confirmDeletionCard(targetCardToDelete);
 })
 
 //получение данных о пользователе
 getUser().then((user) => {
-    profileName.textContent = user.name;
-    profileJob.textContent = user.about;
-    profileAvatar.src = user.avatar;
-    userId = user._id;
-    // карточки загружаются после загрузки данных о пользователе
-    fetchCards(userId);
+  profileName.textContent = user.name;
+  profileJob.textContent = user.about;
+  profileAvatar.src = user.avatar;
+  userId = user._id;
+  // карточки загружаются после загрузки данных о пользователе
+  fetchCards(userId);
 })
-    .catch((err) => {
-        console.log(err);
-    });
+  .catch((err) => {
+    console.log(err);
+  });
 
 enableValidation(validationSelectors);
 
-export {
-    profileName, profileEditButton, profileJob, profileAddButton, userEditPopup, userFormElement, userNameInput, userJobInput, cardDeletePopup,
-    userCloseButton, cardAddPopup, cardAddForm, cardInputMesto, cardInputHref, cardCloseButton, openUserEditPopup, submitProfileForm, submitAvatarForm, submitMesto
-}
+export { cardDeletePopup }
 
 
 
