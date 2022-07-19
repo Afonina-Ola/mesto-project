@@ -36,7 +36,6 @@ const avatarHrefInput = document.querySelector('#avatarHref');
 const avatarSubmitButton = document.querySelector('#avatarSubmitButton');
 // окно удаления карточки
 const cardDeletePopup = document.querySelector('#deleteCard');
-const cardDeleteFormClose = document.querySelector('#cardDeleteFormClose');
 
 // id пользователя, приходит с сервера
 let userId;
@@ -66,10 +65,6 @@ avatarUser.addEventListener('click', function () {
   openPopup(avatarUserPopup);
 });
 
-cardDeleteFormClose.addEventListener('click', function () {
-  closePopup(cardDeletePopup);
-});
-
 // редактирование(обновление) профиля
 function submitProfileForm(evt) {
   evt.preventDefault();
@@ -95,6 +90,8 @@ function submitAvatarForm(evt) {
     .then((data) => {
       profileAvatar.src = data.avatar;
       closePopup(avatarUserPopup);
+      avatarSubmitButton.classList.add('popup__submit-button_inactive');
+      avatarSubmitButtont.setAttribute('disabled', true);
     })
     .catch((err) => {
       console.log(err); // выводим ошибку в консоль

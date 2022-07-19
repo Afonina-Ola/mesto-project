@@ -1,5 +1,4 @@
 const imageCardPopupOpened = document.querySelector('#cardOpened');
-const imageClosePopupButton = document.querySelector('#imageClose');
 const ESC_CODE = 'Escape';
 
 function openPopup(popup) {
@@ -29,8 +28,4 @@ popups.forEach((popup) => {
   });
 })
 
-imageClosePopupButton.addEventListener('click', function () {
-  closePopup(imageCardPopupOpened);
-})
-
-export { openPopup, closePopup, imageCardPopupOpened, imageClosePopupButton, closeByEsc }
+export { openPopup, closePopup, imageCardPopupOpened, closeByEsc }
