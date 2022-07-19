@@ -91,7 +91,7 @@ function submitAvatarForm(evt) {
       profileAvatar.src = data.avatar;
       closePopup(avatarUserPopup);
       avatarSubmitButton.classList.add('popup__submit-button_inactive');
-      avatarSubmitButtont.setAttribute('disabled', true);
+      avatarSubmitButton.setAttribute('disabled', true);
     })
     .catch((err) => {
       console.log(err); // выводим ошибку в консоль
