@@ -4,11 +4,11 @@
     background-repeat: no-repeat;
     border: none;
     width: 22px;
-    height: 19px;
+    height: 29px;
     background-color: transparent;
     cursor: pointer;
     transition: opacity 0.4s;
-    margin: 0;    
+    margin-bottom: 31px;    
 }
 
 .card__like-button:hover {
