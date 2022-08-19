@@ -2,7 +2,7 @@ const imageCardPopupOpened = document.querySelector('#cardOpened');
 const imageClosePopupButton = document.querySelector('#imageClose');
 const ESC_CODE = 'Escape';
 
-function openPopup(popup) {    
+function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closeByEsc);
 }
@@ -33,4 +33,4 @@ imageClosePopupButton.addEventListener('click', function () {
     closePopup(imageCardPopupOpened);
 })
 
-export { openPopup, closePopup, imageCardPopupOpened, imageClosePopupButton, closeByEsc }
+export { imageCardPopupOpened, openPopup, closePopup }

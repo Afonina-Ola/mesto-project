@@ -1,13 +1,13 @@
 import '../pages/index.css';
-import '../components/card.js';
+import './Card.js';
 import '../components/modal.js';
 import '../components/utils.js';
-import '../components/validate.js';
+import './FormValidator.js';
 
 import { openPopup, closePopup } from './modal.js'
 import { clearInputs } from './utils.js'
-import { renderCard, initialCards } from './card.js'
-import { enableValidation, validationSelectors } from './validate.js'
+import { Card, initialCards } from './Card.js'
+import { FormValidator, validationSelectors } from './FormValidator.js'
 
 // профайл
 const profileName = document.querySelector('.profile__author');
@@ -49,6 +49,7 @@ function submitProfileForm(evt) {
 userFormElement.addEventListener('submit', submitProfileForm);
 
 profileAddButton.addEventListener('click', function () {
+    clearInputs(cardAddForm);
     openPopup(cardAddPopup);
 });
 
@@ -61,23 +62,39 @@ function submitMesto(evt) {
     evt.preventDefault();
     renderCard(cardInputHref.value, cardInputMesto.value, 'start');
     closePopup(cardAddPopup);
-    clearInputs(cardAddForm);
     cardSubmitButton.classList.add(validationSelectors.inactiveSubmitButtonClass);
 }
 
 cardAddForm.addEventListener('submit', submitMesto);
 
+function renderCard(link, name, position = "end") {
+    const card = new Card(name, link, '#cardMesto');
+    const cardOnline = document.querySelector('.cards');
+    const cardNew = card.generateCard();
+    if (position === 'start') {
+        cardOnline.prepend(cardNew);
+    } else {
+        cardOnline.append(cardNew);
+    }
+}
+
 initialCards.forEach(function (element) {
     renderCard(element.link, element.name)
 });
 
+// Найдём все формы с указанным классом в DOM,
+// сделаем из них массив методом Array.from
+const formList = Array.from(document.querySelectorAll(validationSelectors.formSelector));
 
-enableValidation(validationSelectors);
+// Переберём полученную коллекцию и добавим валидацию
+formList.forEach((formElement) => {
+    formElement = new FormValidator(validationSelectors, formElement);
+    formElement.enableValidation();
+});
 
-export {
-    profileName, profileEditButton, profileJob, profileAddButton, userEditPopup, userFormElement, userNameInput, userJobInput,
-    userCloseButton, cardAddPopup, cardAddForm, cardInputMesto, cardInputHref, cardCloseButton, openUserEditPopup, submitProfileForm, submitMesto
-}
+
+
+
 
 
 

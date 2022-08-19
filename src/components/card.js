@@ -1,10 +1,6 @@
 import { imageCardPopupOpened, openPopup } from './modal.js'
-const cardTemplate = document.querySelector('#cardMesto').content;
-const cardOnline = document.querySelector('.cards');
-const imageOpened = document.querySelector('.popup__image');
-const imageTextOpened = document.querySelector('.popup__image-text');
 
-const initialCards = [
+export const initialCards = [
     {
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -31,40 +27,56 @@ const initialCards = [
     }
 ];
 
-function toggleLike(evt) {
-    evt.target.classList.toggle('card__like-button_active');
-}
 
-function removeCard(evt) {
-    evt.target.closest('.card').remove();
-}
+export class Card {
+    constructor(name, link, selector) {
+        this._name = name;
+        this._link = link;
+        this._selector = selector;
+    }
 
-function createCard(link, name) {
-    const initialCardsElement = cardTemplate.cloneNode(true);
-    const cardImage = initialCardsElement.querySelector('.card__mask-group');
-    cardImage.src = link;
-    cardImage.alt = name;
-    initialCardsElement.querySelector('.card__text').textContent = name;
-    initialCardsElement.querySelector('.card__like-button').addEventListener('click', toggleLike);
-    initialCardsElement.querySelector('.card__trash-button').addEventListener('click', removeCard);
-    initialCardsElement.querySelector('.card__mask-group').addEventListener('click', function (evt) {
+    _createCard() {
+        const initialCardsElement = document.querySelector(this._selector).content.cloneNode(true);
+        return initialCardsElement;
+    }
+
+    generateCard() {
+        this._element = this._createCard();
+        this._setEventListeners();
+        const cardImage = this._element.querySelector('.card__mask-group');
+        cardImage.src = this._link;
+        cardImage.alt = this._name;
+        this._element.querySelector('.card__text').textContent = this._name;
+        return this._element;
+    }
+
+    _toggleLike(evt) {
+        evt.target.classList.toggle('card__like-button_active');
+    }
+
+    _removeCard(evt) {
+        evt.target.closest('.card').remove();
+    }
+
+    _maximiseCard() {
+        const imageOpened = document.querySelector('.popup__image');
+        const imageTextOpened = document.querySelector('.popup__image-text');
         openPopup(imageCardPopupOpened);
-        imageOpened.src = link;
-        imageTextOpened.textContent = name;
-        imageOpened.alt = name;
-    });
-    return initialCardsElement;
-}
+        imageOpened.src = this._link;
+        imageTextOpened.textContent = this._name;
+        imageOpened.alt = this._name;
+    }
 
-function renderCard(link, name, position = "end") {
-    const card = createCard(link, name);
-    if (position === 'start') {
-        cardOnline.prepend(card);
-    } else {
-        cardOnline.append(card);
+    _setEventListeners() {
+        this._element.querySelector('.card__like-button').addEventListener('click', (evt) => {
+            this._toggleLike(evt);
+        });
+        this._element.querySelector('.card__trash-button').addEventListener('click', (evt) => {
+            this._removeCard(evt);
+        });
+        this._element.querySelector('.card__mask-group').addEventListener('click', () => {
+            this._maximiseCard();
+        });
     }
 }
 
-
-
-export { cardTemplate, cardOnline, imageOpened, imageTextOpened, initialCards, createCard, renderCard, removeCard, toggleLike } 
