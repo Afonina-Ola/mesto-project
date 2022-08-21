@@ -1,4 +1,4 @@
-import { imageCardPopupOpened, openPopup } from './modal.js'
+import { imageCardPopupOpened, openPopup } from './index.js'
 
 export const initialCards = [
     {
