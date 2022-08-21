@@ -1,11 +1,9 @@
-.popup__image-text {    
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    color: #FFFFFF;    
-    margin-top: 10px;
-    margin-bottom: 0;
-  }
-  
-  
+.popup__image-text {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ffffff;
+  margin-top: 10px;
+  margin-bottom: 0;
+}

@@ -1,10 +1,9 @@
 .popup__item-error {
-    opacity: 0;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 15px;
-    color: #FF0000;
-    min-height: 15px;
-  }
-  
+  opacity: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: #ff0000;
+  min-height: 15px;
+}

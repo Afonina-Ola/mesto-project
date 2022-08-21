@@ -1,8 +1,7 @@
 .popup__container-card-opened {
-    position: relative;    
-    max-width: 75vw;
-    max-height: 75vh;    
-    display: block;
-    box-sizing: border-box;    
+  position: relative;
+  max-width: 75vw;
+  max-height: 75vh;
+  display: block;
+  box-sizing: border-box;
 }
-

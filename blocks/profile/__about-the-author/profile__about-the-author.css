@@ -1,22 +1,22 @@
 .profile__about-the-author {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
-    color: #FFFFFF;
-    margin-top: 16px; 
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 535px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  margin-top: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 535px;
 }
 
 @media screen and (max-width: 1279px) {
-    .profile__about-the-author {
-        font-size: 14px;
-        line-height: 17px;
-        margin-top: 14px;
-        max-width: 254px;
-        margin-bottom: 36px;       
-    }
+  .profile__about-the-author {
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 14px;
+    max-width: 254px;
+    margin-bottom: 36px;
+  }
 }
