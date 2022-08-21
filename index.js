@@ -1,9 +1,3 @@
-import '../pages/index.css';
-import './Card.js';
-import '../components/modal.js';
-import '../components/utils.js';
-import './FormValidator.js';
-
 import { openPopup, closePopup } from './modal.js'
 import { clearInputs } from './utils.js'
 import { Card, initialCards } from './Card.js'

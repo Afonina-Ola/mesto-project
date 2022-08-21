@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Место</title>   
+    <title>Место</title>
+    <link rel="stylesheet" href="pages/index.css" />
 </head>
 
 <body class="root">
     <header class="header">
-        <img src="<%=require('./images/header-logo.svg')%>" class="header__logo" alt='логотип' />
+        <img src="./images/header-logo.svg" class="header__logo" alt='логотип' />
     </header>
     <main>
         <section class="profile">
             <div class="profile__profile-info">
-                <img src="<%=require('./images/profile-kusto.jpg')%>" class="profile__avatar" alt='фото Жак-Ив Кусто' />
+                <img src="./images/profile-kusto.jpg" class="profile__avatar" alt='фото Жак-Ив Кусто' />
                 <div class="profile__profile-info-text">
                     <div class="profile__profile-info-name">
                         <h1 class="profile__author">Жак-Ив Кусто</h1>
@@ -81,6 +82,11 @@
         <button aria-label="закрыть" type="button" class="popup__button-close" id="imageClose"></button>
     </div>
     </div>   
+    <script type="module" src="index.js"></script>
+    <script type="module" src="Card.js"></script>
+    <script type="module" src="FormValidator.js"></script>
+    <script type="module" src="modal.js"></script>
+    <script type="module" src="utils.js"></script>
 </body>
 </html>
 
