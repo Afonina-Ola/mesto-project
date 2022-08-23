@@ -22,7 +22,6 @@ const cardSection = document.querySelector('.cards');
 const imageCardPopupOpened = document.querySelector('#cardOpened');
 const imageOpened = document.querySelector('.popup__image');
 const imageTextOpened = document.querySelector('.popup__image-text');
-const imageClosePopupButton = document.querySelector('#imageClose');
 
 const ESC_CODE = 'Escape';
 
@@ -57,7 +56,6 @@ function submitProfileForm(evt) {
   profileName.textContent = userNameInput.value;
   profileJob.textContent = userJobInput.value;
   closePopup(userEditPopup);
-  formValidators['form-user'].resetValidation();
 }
 
 userFormElement.addEventListener('submit', submitProfileForm);
@@ -72,7 +70,6 @@ function submitMesto(evt) {
   evt.preventDefault();
   renderCard(cardInputHref.value, cardInputMesto.value, 'start');
   closePopup(cardAddPopup);
-  formValidators['form-mesto-add'].resetValidation();
 }
 
 cardAddForm.addEventListener('submit', submitMesto);
@@ -81,6 +78,7 @@ cardAddForm.addEventListener('submit', submitMesto);
 function handleCardClick(name, link) {
   imageOpened.src = link;
   imageTextOpened.textContent = name;
+  imageOpened.alt = name;
   openPopup(imageCardPopupOpened);
 }
 
@@ -120,7 +118,6 @@ function closeByEsc(evt) {
 const popups = document.querySelectorAll('.popup');
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-
     if (evt.target.classList.contains('popup_opened')) {
       closePopup(popup)
     }
@@ -130,9 +127,6 @@ popups.forEach((popup) => {
   })
 })
 
-imageClosePopupButton.addEventListener('click', function () {
-  closePopup(imageCardPopupOpened);
-})
 
 
 

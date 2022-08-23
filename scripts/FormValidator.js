@@ -102,7 +102,7 @@ export class FormValidator {
   };
   // очищает ошибки из инпутов и деактивирует кнопку сохранения
   resetValidation() {
-    this._submitButtonElement.classList.add(this._validationSelectors.inactiveSubmitButtonClass);
+    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
