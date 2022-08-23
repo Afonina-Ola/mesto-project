@@ -13,6 +13,8 @@ export class FormValidator {
   constructor(validationSelectors, formElement) {
     this._validationSelectors = validationSelectors;
     this._formElement = formElement;
+    this._submitButtonElement = this._formElement.querySelector(this._validationSelectors.submitButtonSelector);
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._validationSelectors.inputSelector));
   }
 
   // добавляет класс с ошибкой и показывает сообщение об ошибке
@@ -38,7 +40,8 @@ export class FormValidator {
   // проверяет валидность поля
   _isValid(inputElement, validationMessage) {
     if (!inputElement.validity.valid) {
-      // Если поле не проходит валидацию, покажем ошибку. Передадим сообщение об ошибке вторым аргументом
+      // Если поле не проходит валидацию, покажем ошибку.
+      // Передадим сообщение об ошибке вторым аргументом
       this._showInputError(inputElement, validationMessage);
     } else {
       // Если проходит, скроем
@@ -46,61 +49,63 @@ export class FormValidator {
     }
   };
 
-  // принимает массив полей формы и возвращает true, 
-  // если в нём хотя бы одно поле не валидно, 
+  // принимает массив полей формы и возвращает true,
+  // если в нём хотя бы одно поле не валидно,
   // и false, если все валидны.
-  _hasInvalidInput(inputList) {
+  _hasInvalidInput() {
     // проходим по этому массиву методом some
-    return inputList.some((inputElement) => {
+    return this._inputList.some((inputElement) => {
       // Если поле не валидно, колбэк вернёт true
       // Обход массива прекратится и вся функция
-      // hasInvalidInput вернёт true  
+      // hasInvalidInput вернёт true
       return !inputElement.validity.valid;
     })
   };
 
   // нужен для стилизации, принимает массив полей ввода
   // и элемент кнопки, состояние которой нужно менять
-  _toggleButtonState(inputList, buttonElement) {
+  _toggleButtonState(inputList) {
     // Если есть хотя бы один невалидный инпут
     if (this._hasInvalidInput(inputList)) {
       // сделай кнопку неактивной
-      buttonElement.classList.add(this._validationSelectors.inactiveSubmitButtonClass);
-      buttonElement.setAttribute('disabled', true);
+      this._submitButtonElement.classList.add(this._validationSelectors.inactiveSubmitButtonClass);
+      this._submitButtonElement.setAttribute('disabled', true);
     } else {
       // иначе сделай кнопку активной
-      buttonElement.classList.remove(this._validationSelectors.inactiveSubmitButtonClass);
-      buttonElement.removeAttribute('disabled', true);
+      this._submitButtonElement.classList.remove(this._validationSelectors.inactiveSubmitButtonClass);
+      this._submitButtonElement.removeAttribute('disabled', true);
     }
   };
 
-  // примет параметром элемент формы и добавит её полям нужные обработчики   
+  // примет параметром элемент формы и добавит её полям нужные обработчики
   _setEventListeners() {
-    // Находим все поля внутри формы,
-    // сделаем из них массив методом Array.from
-    const inputList = Array.from(this._formElement.querySelectorAll(this._validationSelectors.inputSelector));
-    // Найдём в текущей форме кнопку отправки
-    const buttonElement = this._formElement.querySelector(this._validationSelectors.submitButtonSelector);
     // Вызовем toggleButtonState и передадим ей массив полей и кнопку
-    this._toggleButtonState(inputList, buttonElement);
+    this._toggleButtonState(this._inputList, this._submitButtonElement);
     // Обойдём все элементы полученной коллекции
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       // каждому полю добавим обработчик события input
       inputElement.addEventListener('input', () => {
         // Внутри колбэка вызовем isValid,
         // передав ей форму и проверяемый элемент
         this._isValid(inputElement, inputElement.validationMessage);
-        this._toggleButtonState(inputList, buttonElement);
+        this._toggleButtonState(this._inputList, this._submitButtonElement);
       });
     });
   };
-  // подключает валидацию к форме  
+  // подключает валидацию к форме
   enableValidation() {
     this._formElement.addEventListener('submit', (evt) => {
-      // У формы отменим стандартное поведение
+      // отменяем стандартное поведение у формы
       evt.preventDefault();
     });
     this._setEventListeners();
   };
+  // очищает ошибки из инпутов и деактивирует кнопку сохранения
+  resetValidation() {
+    this._submitButtonElement.classList.add(this._validationSelectors.inactiveSubmitButtonClass);
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+    });
+  }
 }
 
