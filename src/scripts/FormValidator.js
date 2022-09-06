@@ -64,9 +64,9 @@ export class FormValidator {
 
   // нужен для стилизации, принимает массив полей ввода
   // и элемент кнопки, состояние которой нужно менять
-  _toggleButtonState(inputList) {
+  _toggleButtonState() {
     // Если есть хотя бы один невалидный инпут
-    if (this._hasInvalidInput(inputList)) {
+    if (this._hasInvalidInput()) {
       // сделай кнопку неактивной
       this._submitButtonElement.classList.add(this._validationSelectors.inactiveSubmitButtonClass);
       this._submitButtonElement.setAttribute('disabled', true);
@@ -80,7 +80,7 @@ export class FormValidator {
   // примет параметром элемент формы и добавит её полям нужные обработчики
   _setEventListeners() {
     // Вызовем toggleButtonState и передадим ей массив полей и кнопку
-    this._toggleButtonState(this._inputList, this._submitButtonElement);
+    this._toggleButtonState();
     // Обойдём все элементы полученной коллекции
     this._inputList.forEach((inputElement) => {
       // каждому полю добавим обработчик события input
@@ -88,7 +88,7 @@ export class FormValidator {
         // Внутри колбэка вызовем isValid,
         // передав ей форму и проверяемый элемент
         this._isValid(inputElement, inputElement.validationMessage);
-        this._toggleButtonState(this._inputList, this._submitButtonElement);
+        this._toggleButtonState();
       });
     });
   };
