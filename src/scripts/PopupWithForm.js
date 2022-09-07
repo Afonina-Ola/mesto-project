@@ -1,17 +1,15 @@
 import { Popup } from './Popup.js'
-import { clearInputs } from './utils.js'
 
 export class PopupWithForm extends Popup {
   constructor(popupSelector, submitForm) {
     super(popupSelector);
     this._submitForm = submitForm;
-    this.clearInputs = clearInputs;
     this.form = this._popup.querySelector('.popup__form');
   }
 
-  closePopup() {
-    super.closePopup();
-    this.clearInputs(this.form);
+  close() {
+    super.close();
+    this.form.reset();
   }
 
   // собирает данные всех полей формы

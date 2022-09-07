@@ -1,18 +1,17 @@
 import { Popup } from './Popup.js'
 // окно картинки в увеличении
-export const imageOpened = document.querySelector('.popup__image');
-export const imageTextOpened = document.querySelector('.popup__image-text');
 
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {
     super(popupSelector);
-
+    this.imageOpened = this._popup.querySelector('.popup__image');
+    this.imageTextOpened = this._popup.querySelector('.popup__image-text');
   }
 
-  openPopup(name, link) {
-    super.openPopup();
-    imageOpened.src = link;
-    imageTextOpened.textContent = name;
-    imageOpened.alt = name;
+  open(name, link) {
+    super.open();
+    this.imageOpened.src = link;
+    this.imageTextOpened.textContent = name;
+    this.imageOpened.alt = name;
   }
 }

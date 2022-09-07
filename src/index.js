@@ -1,7 +1,7 @@
 import './pages/index.css';
-import { } from './scripts/utils.js'
-import { Card, initialCards } from './scripts/Card.js'
-import { FormValidator, validationSelectors } from './scripts/FormValidator.js'
+import { Card } from './scripts/Card.js'
+import { initialCards, validationSelectors } from './scripts/constants'
+import { FormValidator } from './scripts/FormValidator.js'
 import { Section } from './scripts/Section.js'
 import { PopupWithForm } from './scripts/PopupWithForm.js'
 import { PopupWithImage } from './scripts/PopupWithImage.js'
@@ -34,13 +34,13 @@ enableAllValidation(validationSelectors);
 const userPopup = new PopupWithForm('#userInfo', submitProfileForm);
 userPopup.setEventListeners();
 
-const userNameJob = new UserInfo( {nameSelector:'.profile__author', jobSelector:'.profile__about-the-author'} );
+const userInfo = new UserInfo({ nameSelector: '.profile__author', jobSelector: '.profile__about-the-author' });
 
 function openUserEditPopup() {
-  const {name, job} = userNameJob.getUserInfo();
-  userNameInput.value = name;
+  const { name, job } = userInfo.getUserInfo();
+  userInfo.value = name;
   userJobInput.value = job;
-  userPopup.openPopup();
+  userPopup.open();
   formValidators['form-user'].resetValidation();
 }
 
@@ -48,33 +48,39 @@ profileEditButton.addEventListener('click', openUserEditPopup);
 
 function submitProfileForm(evt, inputValues) {
   evt.preventDefault();
-  userNameJob.setUserInfo({userName: inputValues.username, userJob: inputValues.userjob});
-  userPopup.closePopup();
+  userInfo.setUserInfo({ userName: inputValues.username, userJob: inputValues.userjob });
+  userPopup.close();
 }
 
-const cardPopup = new PopupWithForm('#cardInfo', submitMesto);
+const cardPopup = new PopupWithForm('#cardInfo', submitAddCardPopup);
 cardPopup.setEventListeners();
 
 profileAddButton.addEventListener('click', function () {
-  cardPopup.openPopup();
+  cardPopup.open();
   formValidators['form-mesto-add'].resetValidation();
 });
 
-function submitMesto(evt, inputValues) {
+function submitAddCardPopup(evt, inputValues) {
   evt.preventDefault();
   renderCard({ link: inputValues.mestoHref, name: inputValues.mesto });
-  cardPopup.closePopup();
+  cardPopup.close();
 }
 
 const imagePopup = new PopupWithImage('#cardOpened');
-const handleCardClick = imagePopup.openPopup;
-imagePopup.closePopup();
+const handleCardClick = imagePopup.open;
+imagePopup.close();
 imagePopup.setEventListeners();
 
 // создает карточку и возвращает её html-представление
-function renderCard({ name, link }) {
+function createCard({ name, link }) {
   const card = new Card(name, link, '#cardMesto', handleCardClick);
   const cardNew = card.generateCard();
+  return cardNew
+}
+
+// добавляет карточку в разметку
+function renderCard({ name, link }) {
+  const cardNew = createCard({ name, link });
   section.addItem(cardNew);
 }
 

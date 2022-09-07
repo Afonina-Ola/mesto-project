@@ -1,18 +1,17 @@
 export class Popup {
   constructor(popupSelector) {
     this._popup = document.querySelector(popupSelector);
-    this.closePopup = this.closePopup.bind(this);
-    this.openPopup = this.openPopup.bind(this);
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
-
-  openPopup() {
+  open() {
     this._popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handleEscClose);
   }
 
-  closePopup() {
+  close() {
     this._popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handleEscClose);
   }
@@ -20,7 +19,7 @@ export class Popup {
   // Закрытие попапа нажатием на Esc
   _handleEscClose(evt) {
     if (evt.key === 'Escape') {
-      this.closePopup();
+      this.close();
     }
   }
 
@@ -28,10 +27,10 @@ export class Popup {
   setEventListeners() {
     this._popup.addEventListener('mousedown', (evt) => {
       if (evt.target.classList.contains('popup_opened')) {
-        this.closePopup()
+        this.close()
       }
       if (evt.target.classList.contains('popup__button-close')) {
-        this.closePopup()
+        this.close()
       }
     })
   }

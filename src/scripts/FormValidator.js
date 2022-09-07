@@ -1,14 +1,3 @@
-export const validationSelectors = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__item',
-  submitButtonSelector: '.popup__submit-button',
-  inactiveSubmitButtonClass: 'popup__submit-button_inactive',
-  inactiveButtonClass: 'popup__button-close',
-  inputErrorClass: 'popup__item-error',
-  errorClass: 'popup__item-error_active',
-  inputErrorClass: 'popup__item_input-error'
-}
-
 export class FormValidator {
   constructor(validationSelectors, formElement) {
     this._validationSelectors = validationSelectors;
@@ -92,6 +81,7 @@ export class FormValidator {
       });
     });
   };
+
   // подключает валидацию к форме
   enableValidation() {
     this._formElement.addEventListener('submit', (evt) => {
@@ -100,6 +90,7 @@ export class FormValidator {
     });
     this._setEventListeners();
   };
+  
   // очищает ошибки из инпутов и деактивирует кнопку сохранения
   resetValidation() {
     this._toggleButtonState();
