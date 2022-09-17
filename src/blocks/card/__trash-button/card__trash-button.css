@@ -8,10 +8,10 @@
     background-image: url("../../../images/card-trash.svg");
     background-position: center;
     background-repeat: no-repeat;
-    border: none;    
+    border: none;
     background-color: transparent;
     cursor: pointer;
-    transition: opacity 0.4s;       
+    transition: opacity 0.4s;
 }
 
 .card__trash-button:hover {

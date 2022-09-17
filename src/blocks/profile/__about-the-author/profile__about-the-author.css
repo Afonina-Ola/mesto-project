@@ -4,7 +4,7 @@
     font-size: 18px;
     line-height: 22px;
     color: #FFFFFF;
-    margin-top: 16px; 
+    margin-top: 16px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -17,6 +17,6 @@
         line-height: 17px;
         margin-top: 14px;
         max-width: 254px;
-        margin-bottom: 36px;       
+        margin-bottom: 36px;
     }
 }
