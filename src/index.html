@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Место</title>
-
 </head>
-
 <body class="root">
   <header class="header">
     <img src="<%=require('./images/header-logo.svg')%>" class="header__logo" alt='логотип' />
@@ -16,13 +13,15 @@
   <main>
     <section class="profile">
       <div class="profile__profile-info">
-        <img src="<%=require('./images/profile-kusto.jpg')%>" class="profile__avatar" alt='фото Жак-Ив Кусто' />
+        <div class="profile__container-avatar">
+          <img src="#" class="profile__avatar" alt='аватар пользователя' />
+        </div>
         <div class="profile__profile-info-text">
           <div class="profile__profile-info-name">
-            <h1 class="profile__author">Жак-Ив Кусто</h1>
+            <h1 class="profile__author"></h1>
             <button aria-label="указать имя и о себе" type="button" class="profile__stilus"></button>
           </div>
-          <p class="profile__about-the-author">Исследователь океана</p>
+          <p class="profile__about-the-author"></p>
         </div>
       </div>
       <button aria-label="добавить новую карточку" type="button" class="profile__add-button"></button>
@@ -31,10 +30,13 @@
       <template id="cardMesto">
         <article class="card">
           <button aria-label="удалить карточку" type="button" class="card__trash-button"></button>
-          <img src="#" class="card__mask-group" alt='фото места' />
+          <img src="" class="card__mask-group" alt='фото места' />
           <div class="card__text-button">
             <h2 class="card__text">Название места</h2>
-            <button aria-label="поставить лайк" type="button" class="card__like-button"></button>
+            <div class="card__container-like-counter">
+              <button aria-label="поставить лайк" type="button" class="card__like-button"></button>
+              <p class="card__like-counter">2352</p>
+            </div>
           </div>
         </article>
       </template>
@@ -55,7 +57,7 @@
             minlength="2" maxlength="200">
           <span class="userjob-input-error popup__item-error"></span>
         </fieldset>
-        <button type="submit" class="popup__submit-button">Сохранить</button>
+        <button type="submit" class="popup__submit-button" id="userSubmitButton">Сохранить</button>
       </form>
       <button aria-label="закрыть" type="button" class="popup__button-close" id="userInfoClose"></button>
     </div>
@@ -77,6 +79,29 @@
       <button aria-label="закрыть" type="button" class="popup__button-close" id="cardInfoClose"></button>
     </div>
   </div>
+  <div class="popup" id="editAvatar">
+    <div class="popup__container">
+      <form name="form-avatar-edit" class="popup__form" id="formAvatarEdit" novalidate>
+        <h3 class="popup__heading-form">Обновить аватар</h3>
+        <fieldset class="popup__form-input-container">
+          <input type="url" class="popup__item" id="avatarHref" name="href-avatar" placeholder="ссылка на аватар"
+            required>
+          <span class="avatarHref-input-error popup__item-error"></span>
+        </fieldset>
+        <button type="submit" class="popup__submit-button" id="avatarSubmitButton">Сохранить</button>
+      </form>
+      <button aria-label="закрыть" type="button" class="popup__button-close" id="avatarClose"></button>
+    </div>
+  </div>
+  <div class="popup" id="deleteCard">
+    <div class="popup__container">
+      <form name="form-card-delete" class="popup__form" id="formCardDelete">
+        <h3 class="popup__heading-form popup__heading-form_card-delete">Вы уверены?</h3>
+        <button type="submit" class="popup__submit-button" id="cardDeleteSubmitButton">Да</button>
+      </form>
+      <button aria-label="закрыть" type="button" class="popup__button-close" id="cardDeleteFormClose"></button>
+    </div>
+  </div>
   <div class="popup popup_dark" id="cardOpened">
     <div class="popup__container-card-opened">
       <figure class="popup__image-text-card">
@@ -86,6 +111,5 @@
       <button aria-label="закрыть" type="button" class="popup__button-close" id="imageClose"></button>
     </div>
   </div>
-  
 </body>
 </html>

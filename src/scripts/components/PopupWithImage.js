@@ -1,5 +1,4 @@
 import { Popup } from './Popup.js'
-// окно картинки в увеличении
 
 export class PopupWithImage extends Popup {
   constructor(popupSelector) {

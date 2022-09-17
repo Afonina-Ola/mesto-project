@@ -90,7 +90,7 @@ export class FormValidator {
     });
     this._setEventListeners();
   };
-  
+
   // очищает ошибки из инпутов и деактивирует кнопку сохранения
   resetValidation() {
     this._toggleButtonState();

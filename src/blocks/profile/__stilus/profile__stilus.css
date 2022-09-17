@@ -1,29 +1,30 @@
 .profile__stilus {
-  height: 24px;
-  width: 24px;
-  background-color: rgba(0, 0, 0, 0);
-  border: 1px solid #ffffff;
-  margin-top: 77px;
-  margin-left: 18px;
-  display: flex;
-  cursor: pointer;
-  transition: opacity 0.4s;
-  background-image: url("../../../images/profile-stilus.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 10px;
+    height: 24px;
+    width: 24px;
+    background-color: rgba(0, 0, 0, 0);
+    border: 1px solid #FFFFFF;
+    margin-top: 77px;
+    margin-left: 18px;
+    display: flex;
+    cursor: pointer;
+    transition: opacity 0.4s;
+    background-image: url("../../../images/profile-stilus.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 10px;
 }
 
 .profile__stilus:hover {
-  opacity: 0.6;
+    opacity: 0.6;
 }
 
+
 @media screen and (max-width: 1279px) {
-  .profile__stilus {
-    height: 18px;
-    width: 18px;
-    margin-top: 30.25px;
-    margin-left: 10px;
-    background-size: 7.5px;
-  }
+    .profile__stilus {
+        height: 18px;
+        width: 18px;
+        margin-top: 30.25px;
+        margin-left: 10px;
+        background-size: 7.5px;
+    }
 }
