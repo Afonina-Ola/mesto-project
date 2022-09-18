@@ -47,7 +47,7 @@ enableAllValidation(validationSelectors);
 const userPopup = new PopupWithForm('#userInfo', submitProfileForm);
 userPopup.setEventListeners();
 
-const userInfo = new UserInfo({ nameSelector: '.profile__author', jobSelector: '.profile__about-the-author' });
+const userInfo = new UserInfo({ nameSelector: '.profile__author', jobSelector: '.profile__about-the-author', avatarSelector: '.profile__avatar' });
 
 function openUserEditPopup() {
   const { name, job } = userInfo.getUserInfo();
@@ -65,13 +65,12 @@ function submitProfileForm(evt, inputValues) {
   api.editUser(inputValues.username, inputValues.userjob)
     .then((res) => {
       userInfo.setUserInfo({ userName: res.name, userJob: res.about });
-
+      userPopup.close();
     })
     .catch((error) => console.log(`Ошибка: ${error}`))
     .finally(() => {
       userSubmitButton.textContent = 'Сохранить';
     })
-  userPopup.close();
 }
 
 const cardPopup = new PopupWithForm('#cardInfo', submitAddCardPopup);
@@ -87,19 +86,17 @@ function submitAddCardPopup(evt, inputValues) {
   cardSubmitButton.textContent = 'Сохранение...';
   api.addCard(inputValues.mesto, inputValues.mestoHref)
     .then((res) => {
-      console.log(res);
       renderCard({ link: res.link, name: res.name, likes: res.likes, owner: res.owner, _id: res._id }, 'start');
+      cardPopup.close();
     })
     .catch((error) => console.log(`Ошибка: ${error}`))
     .finally(() => {
       cardSubmitButton.textContent = 'Сохранить';
     })
-  cardPopup.close();
 }
 
 const imagePopup = new PopupWithImage('#cardOpened');
 const handleCardClick = imagePopup.open;
-imagePopup.close();
 imagePopup.setEventListeners();
 
 const cardDeletePopup = new PopupWithSubmit('#deleteCard');
@@ -121,20 +118,18 @@ const createCard = ({ name, link, likes, owner, cardId }) => {
       })
     },
     handleLikeClick: (card) => {
-      if (card.querySelector('.card__like-button').classList.contains("card__like-button_active")) {
+      if (card.checkIsMyLike()) {
         api.removeLike(cardId)
-          .then((data) => {
-            card.querySelector('.card__like-counter').textContent = data.likes.length;
-            card.querySelector('.card__like-button').classList.remove("card__like-button_active");
+          .then((res) => {
+            card.updateLikes(res)
           })
           .catch((err) => {
             console.log(err);
           });
       } else {
         api.addLike(cardId)
-          .then((data) => {
-            card.querySelector('.card__like-counter').textContent = data.likes.length;
-            card.querySelector('.card__like-button').classList.add("card__like-button_active");
+          .then((res) => {
+            card.updateLikes(res);
           })
           .catch((err) => {
             console.log(err);
@@ -157,10 +152,11 @@ function renderCard({ name, link, likes, owner, _id }, position) {
 api.getUserInfo()
   .then((res) => {
     userInfo.setUserInfo({ userName: res.name, userJob: res.about });
+    userInfo.setAvatar(res.avatar);
     userId = res._id;
-    profileAvatar.src = res.avatar;
   }).then(() => {
     api.getCards().then((res) => {
+
       const sectionUsers = new Section({ items: res, renderer: renderCard }, '.cards');
       sectionUsers.renderItems();
     })
@@ -182,12 +178,12 @@ function handleFormSubmit(evt, inputValues) {
   api.editAvatar(inputValues.avatarHref)
     .then((res) => {
       profileAvatar.src = res.avatar;
+      avatarPopup.close();
     })
     .catch((error) => console.log(`Ошибка: ${error}`))
     .finally(() => {
       avatarSubmitButton.textContent = 'Сохранить';
     })
-    avatarPopup.close();
 }
 
 

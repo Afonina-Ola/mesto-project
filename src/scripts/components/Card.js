@@ -22,13 +22,16 @@ export class Card {
     this._cardImage = this._element.querySelector('.card__mask-group');
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._setEventListeners();
-    if (this._checkIsMyLike()) {
-      this._element.querySelector('.card__like-button').classList.add('card__like-button_active');
+    this._likeButton = this._element.querySelector('.card__like-button');
+    this._likeCounter = this._element.querySelector('.card__like-counter');
+    this._trashButton = this._element.querySelector('.card__trash-button');
+    if (this.checkIsMyLike()) {
+      this._likeButton.classList.add('card__like-button_active');
     }
     this._element.querySelector('.card__text').textContent = this._name;
-    this._element.querySelector('.card__like-counter').textContent = this._likes.length;
-    this._element.querySelector('.card__trash-button').classList.add(this._userId !== this._ownerId && 'card__trash-button_hidden');
+    this._likeCounter.textContent = this._likes.length;
+    this._trashButton.classList.add(this._userId !== this._ownerId && 'card__trash-button_hidden');
+    this._setEventListeners();
     return this._element;
   }
 
@@ -36,7 +39,7 @@ export class Card {
     this._card.remove();
   }
 
-  _checkIsMyLike() {
+  checkIsMyLike() {
     let isLike = false;
     this._likes.forEach((item) => {
       if (item._id === this._userId) {
@@ -46,12 +49,17 @@ export class Card {
     return isLike;
   }
 
+  updateLikes(res) {
+    this._likes = res.likes;
+    this._likeCounter.textContent = res.likes.length;
+    this._likeButton.classList.toggle("card__like-button_active");
+  }
+
   _setEventListeners() {
-    this._element.querySelector('.card__like-button').addEventListener('click', (evt) => {
-      this._card = evt.target.closest('.card');
-      this._handleLikeClick(this._card);
+    this._likeButton.addEventListener('click', (evt) => {
+      this._handleLikeClick(this);
     });
-    this._element.querySelector('.card__trash-button').addEventListener('click', (evt) => {
+    this._trashButton.addEventListener('click', (evt) => {
       this._card = evt.target.closest('.card');
       this._handleDeleteIconClick(this);
     });
