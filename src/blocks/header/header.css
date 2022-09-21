@@ -2,6 +2,8 @@
   display: block;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   box-sizing: border-box;
+  max-width: 880px;
+  margin: auto;
 }
 
 @media screen and (max-width: 1070px) {

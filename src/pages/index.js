@@ -13,16 +13,11 @@ import { apiConfig } from '../scripts/utils/constants.js'
 // профайл
 const profileEditButton = document.querySelector('.profile__stilus');
 const profileAddButton = document.querySelector('.profile__add-button');
-const profileAvatar = document.querySelector('.profile__avatar');
 // окно заполнения данных о пользователе
 const userNameInput = document.querySelector('#username');
 const userJobInput = document.querySelector('#userjob');
-const userSubmitButton = document.querySelector('#userSubmitButton');
 // окно обновления аватара
 const avatarUser = document.querySelector('.profile__container-avatar');
-const avatarSubmitButton = document.querySelector('#avatarSubmitButton');
-// окно добавления карточки
-const cardSubmitButton = document.querySelector('#cardSubmitButton');
 
 const api = new Api(apiConfig);
 let userId = '';
@@ -44,7 +39,7 @@ const enableAllValidation = (config) => {
 
 enableAllValidation(validationSelectors);
 
-const userPopup = new PopupWithForm('#userInfo', submitProfileForm);
+const userPopup = new PopupWithForm('#userInfo', handleUserFormSubmit);
 userPopup.setEventListeners();
 
 const userInfo = new UserInfo({ nameSelector: '.profile__author', jobSelector: '.profile__about-the-author', avatarSelector: '.profile__avatar' });
@@ -59,21 +54,23 @@ function openUserEditPopup() {
 
 profileEditButton.addEventListener('click', openUserEditPopup);
 
-function submitProfileForm(evt, inputValues) {
+const handleError = (error) => console.log(`Ошибка: ${error}`);
+
+function handleUserFormSubmit(evt, inputValues) {
   evt.preventDefault();
-  userSubmitButton.textContent = 'Сохранение...';
+  userPopup.renderLoading(true, 'Сохранение...');
   api.editUser(inputValues.username, inputValues.userjob)
     .then((res) => {
       userInfo.setUserInfo({ userName: res.name, userJob: res.about });
       userPopup.close();
     })
-    .catch((error) => console.log(`Ошибка: ${error}`))
+    .catch(handleError)
     .finally(() => {
-      userSubmitButton.textContent = 'Сохранить';
+      userPopup.renderLoading(false);
     })
 }
 
-const cardPopup = new PopupWithForm('#cardInfo', submitAddCardPopup);
+const cardPopup = new PopupWithForm('#cardInfo', handleAddCardFormSubmit);
 cardPopup.setEventListeners();
 
 profileAddButton.addEventListener('click', function () {
@@ -81,17 +78,17 @@ profileAddButton.addEventListener('click', function () {
   formValidators['form-mesto-add'].resetValidation();
 });
 
-function submitAddCardPopup(evt, inputValues) {
+function handleAddCardFormSubmit(evt, inputValues) {
   evt.preventDefault();
-  cardSubmitButton.textContent = 'Сохранение...';
+  cardPopup.renderLoading(true, 'Сохранение...');
   api.addCard(inputValues.mesto, inputValues.mestoHref)
     .then((res) => {
       renderCard({ link: res.link, name: res.name, likes: res.likes, owner: res.owner, _id: res._id }, 'start');
       cardPopup.close();
     })
-    .catch((error) => console.log(`Ошибка: ${error}`))
+    .catch(handleError)
     .finally(() => {
-      cardSubmitButton.textContent = 'Сохранить';
+      cardPopup.renderLoading(false);
     })
 }
 
@@ -114,7 +111,7 @@ const createCard = ({ name, link, likes, owner, cardId }) => {
             card.removeCard();
             cardDeletePopup.close();
           })
-          .catch((error) => console.log(`Ошибка: ${error}`));
+          .catch(handleError);
       })
     },
     handleLikeClick: (card) => {
@@ -123,17 +120,13 @@ const createCard = ({ name, link, likes, owner, cardId }) => {
           .then((res) => {
             card.updateLikes(res)
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(handleError);
       } else {
         api.addLike(cardId)
           .then((res) => {
             card.updateLikes(res);
           })
-          .catch((err) => {
-            console.log(err);
-          });
+          .catch(handleError);
       }
     }
   }, '#cardMesto')
@@ -141,7 +134,7 @@ const createCard = ({ name, link, likes, owner, cardId }) => {
   return cardNew
 }
 
-const section = new Section({ items: [], renderer: renderCard }, '.cards');
+const section = new Section({ renderer: renderCard }, '.cards');
 
 // добавляет карточку в разметку
 function renderCard({ name, link, likes, owner, _id }, position) {
@@ -149,22 +142,16 @@ function renderCard({ name, link, likes, owner, _id }, position) {
   section.addItem(cardNew, position);
 }
 
-api.getUserInfo()
-  .then((res) => {
-    userInfo.setUserInfo({ userName: res.name, userJob: res.about });
-    userInfo.setAvatar(res.avatar);
-    userId = res._id;
-  }).then(() => {
-    api.getCards().then((res) => {
-
-      const sectionUsers = new Section({ items: res, renderer: renderCard }, '.cards');
-      sectionUsers.renderItems();
-    })
-      .catch((error) => console.log(`Ошибка: ${error}`))
+Promise.all([api.getUserInfo(), api.getCards()])
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo({ userName: userData.name, userJob: userData.about });
+    userInfo.setAvatar(userData.avatar);
+    userId = userData._id;
+    section.renderItems(cards);
   })
-  .catch((error) => console.log(`Ошибка: ${error}`))
+  .catch(handleError)
 
-const avatarPopup = new PopupWithForm('#editAvatar', handleFormSubmit);
+const avatarPopup = new PopupWithForm('#editAvatar', handleAvatarFormSubmit);
 avatarPopup.setEventListeners();
 
 avatarUser.addEventListener('click', function () {
@@ -172,17 +159,17 @@ avatarUser.addEventListener('click', function () {
   formValidators['form-avatar-edit'].resetValidation();
 });
 
-function handleFormSubmit(evt, inputValues) {
+function handleAvatarFormSubmit(evt, inputValues) {
   evt.preventDefault();
-  avatarSubmitButton.textContent = 'Сохранение...';
+  avatarPopup.renderLoading(true, 'Сохранение...');
   api.editAvatar(inputValues.avatarHref)
     .then((res) => {
-      profileAvatar.src = res.avatar;
+      userInfo.setAvatar(res.avatar);
       avatarPopup.close();
     })
-    .catch((error) => console.log(`Ошибка: ${error}`))
+    .catch(handleError)
     .finally(() => {
-      avatarSubmitButton.textContent = 'Сохранить';
+      avatarPopup.renderLoading(false);
     })
 }
 

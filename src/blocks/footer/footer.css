@@ -1,4 +1,6 @@
 .footer {
   display: block;
   box-sizing: border-box;
+  max-width: 880px;
+  margin: auto;
 }

@@ -5,6 +5,8 @@ export class PopupWithForm extends Popup {
     super(popupSelector);
     this._submitForm = submitForm;
     this.form = this._popup.querySelector('.popup__form');
+    this._submitButton = this._popup.querySelector('.popup__submit-button');
+    this._submitButtonText = this._submitButton.textContent
   }
 
   close() {
@@ -16,8 +18,8 @@ export class PopupWithForm extends Popup {
   _getInputValues() {
     const inputValues = {}
     // Находим все поля внутри формы, делаем из них массив
-    const inputFormList = Array.from(this.form.querySelectorAll('.popup__item'));
-    inputFormList.forEach((input) => {
+    this._inputList = Array.from(this.form.querySelectorAll('.popup__item'));
+    this._inputList.forEach((input) => {
       inputValues[input.id] = input.value;
     });
     return inputValues;
@@ -27,5 +29,13 @@ export class PopupWithForm extends Popup {
   setEventListeners() {
     super.setEventListeners();
     this.form.addEventListener('submit', (evt) => { this._submitForm(evt, this._getInputValues()) })
+  }
+
+  renderLoading(isLoading, loadingText = 'Сохранение...') {
+    if (isLoading) {
+      this._submitButton.textContent = loadingText;
+    } else {
+      this._submitButton.textContent = this._submitButtonText;
+    }
   }
 }
